@@ -1,3 +1,5 @@
+package dao;
+
 import model.Icon;
 import model.Menu;
 import model.SubMenu;

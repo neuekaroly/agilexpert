@@ -1,3 +1,5 @@
+import dao.HibernateUtil;
+import dao.UserDao;
 import model.Menu;
 import model.SubMenu;
 import model.User;
@@ -15,7 +17,7 @@ public class AgileExpert {
 
         //read();
 
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        /*SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
         Session session = sessionFactory.openSession();
 
@@ -37,43 +39,20 @@ public class AgileExpert {
 
         session = sessionFactory.openSession();
 
-        read(session);
+        read(session);*/
+
+        UserDao userDao = new UserDao();
+
+        userDao.openCurrentSessionWithTransaction();
+
+        userDao.persist(new User("Test"));
+        userDao.persist(new User("Test1"));
+
+        System.out.println(userDao.findAll().size());
+
+        userDao.deleteAll();
+
+        System.out.println(userDao.findAll().size());
     }
-
-    private static SessionFactory buildSessionFactory() {
-        return new Configuration().configure()
-                .addAnnotatedClass(User.class)
-                .addAnnotatedClass(Menu.class)
-                .addAnnotatedClass(SubMenu.class)
-                .buildSessionFactory();
-    }
-
-    public static SessionFactory getSessionFactory() {
-        Configuration configuration = new Configuration().configure();
-        configuration.addAnnotatedClass(User.class);
-        configuration.addAnnotatedClass(Menu.class);
-        configuration.addAnnotatedClass(SubMenu.class);
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-                .applySettings(configuration.getProperties());
-        SessionFactory sessionFactory = configuration
-                .buildSessionFactory(builder.build());
-        return sessionFactory;
-    }
-
-    public static Integer create(User user) {
-        Session session = getSessionFactory().openSession();
-        session.beginTransaction();
-        session.save(user);
-        session.getTransaction().commit();
-        session.close();
-        System.out.println("Successfully created " + user.toString());
-        return user.getId();
-    }
-
-    public static List<User> read(Session session) {
-        System.out.println(session.createQuery("FROM User").list().size());
-
-        return null;
-    }
-
+    
 }
