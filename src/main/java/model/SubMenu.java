@@ -15,8 +15,8 @@ public class SubMenu {
     @Column(name = "submenu_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    private int id;
+    private int subMenuId;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String name;
 }

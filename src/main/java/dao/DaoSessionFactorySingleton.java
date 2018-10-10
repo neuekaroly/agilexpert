@@ -7,11 +7,11 @@ import model.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateSingleton {
+public class DaoSessionFactorySingleton {
 
     private static SessionFactory sessionFactory;
 
-    private HibernateSingleton(){}
+    private DaoSessionFactorySingleton(){}
 
     public static synchronized SessionFactory getSessionFactory() {
         if(sessionFactory == null) {

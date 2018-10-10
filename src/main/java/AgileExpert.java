@@ -1,48 +1,23 @@
-import dao.UserDao;
+import dao.DaoSession;
+import model.Icon;
+import model.Menu;
 import model.User;
 
 public class AgileExpert {
     public static void main(String[] args) {
-        //create(new User("Test"));
+        DaoSession<Menu> daoMenu = new DaoSession<Menu>(Menu.class);
 
-        //read();
+        DaoSession<User> daoUser = new DaoSession<User>(User.class);
 
-        /*SessionFactory sessionFactory = HibernateSingleton.getSessionFactory();
+        for (int i = 0; i < 10; i++) {
+            User user = new User("test" + i);
+            user.getMainMenus().add(new Menu("test" + i));
+            daoUser.persist(user);
+        }
 
-        Session session = sessionFactory.openSession();
-
-        Transaction transaction = session.beginTransaction();
-
-        session.save(new User("Test"));
-
-        session.save(new User("Test2"));
-
-        session.flush();
-
-        transaction.commit();
-
-        System.out.println(session.createQuery("FROM User").list().size()); //Terminal prints 2
-
-        session.close();
-
-        sessionFactory = HibernateSingleton.getSessionFactory();
-
-        session = sessionFactory.openSession();
-
-        read(session);*/
-
-        UserDao userDao = new UserDao();
-
-        userDao.openCurrentSessionWithTransaction();
-
-        userDao.persist(new User("Test"));
-        userDao.persist(new User("Test1"));
-
-        System.out.println(userDao.findAll().get(0).toString());
-
-        userDao.deleteAll();
-
-        System.out.println(userDao.findAll().size());
+        for(User user : daoUser.findAll()) {
+            System.out.println(user);
+        }
     }
 
 }
