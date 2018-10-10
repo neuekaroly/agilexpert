@@ -14,12 +14,12 @@ public class UserDao implements DaoInterface<User>{
     private Transaction currentTransaction;
 
     public Session openCurrentSession() {
-        currentSession = HibernateUtil.getSessionFactory().openSession();
+        currentSession = HibernateSingleton.getSessionFactory().openSession();
         return currentSession;
     }
 
     public Session openCurrentSessionWithTransaction() {
-        currentSession = HibernateUtil.getSessionFactory().openSession();
+        currentSession = HibernateSingleton.getSessionFactory().openSession();
         currentTransaction = currentSession.beginTransaction();
         return currentSession;
     }

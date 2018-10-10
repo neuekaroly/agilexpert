@@ -7,13 +7,21 @@ import model.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateUtil {
+public class HibernateSingleton {
 
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static SessionFactory sessionFactory;
+
+    private HibernateSingleton(){}
+
+    public static synchronized SessionFactory getSessionFactory() {
+        if(sessionFactory == null) {
+            sessionFactory = buildSessionFactory();
+        }
+
+        return sessionFactory;
+    }
 
     private static SessionFactory buildSessionFactory() {
-        try {
-            // Create the SessionFactory from hibernate.cfg.xml
             return new Configuration()
                     .configure()
                     .addAnnotatedClass(User.class)
@@ -21,13 +29,6 @@ public class HibernateUtil {
                     .addAnnotatedClass(SubMenu.class)
                     .addAnnotatedClass(Icon.class)
                     .buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
     }
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
 }

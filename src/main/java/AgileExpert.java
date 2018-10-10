@@ -1,15 +1,5 @@
-import dao.HibernateUtil;
 import dao.UserDao;
-import model.Menu;
-import model.SubMenu;
 import model.User;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-
-import java.util.List;
 
 public class AgileExpert {
     public static void main(String[] args) {
@@ -17,7 +7,7 @@ public class AgileExpert {
 
         //read();
 
-        /*SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        /*SessionFactory sessionFactory = HibernateSingleton.getSessionFactory();
 
         Session session = sessionFactory.openSession();
 
@@ -35,7 +25,7 @@ public class AgileExpert {
 
         session.close();
 
-        sessionFactory = HibernateUtil.getSessionFactory();
+        sessionFactory = HibernateSingleton.getSessionFactory();
 
         session = sessionFactory.openSession();
 
@@ -48,11 +38,11 @@ public class AgileExpert {
         userDao.persist(new User("Test"));
         userDao.persist(new User("Test1"));
 
-        System.out.println(userDao.findAll().size());
+        System.out.println(userDao.findAll().get(0).toString());
 
         userDao.deleteAll();
 
         System.out.println(userDao.findAll().size());
     }
-    
+
 }
