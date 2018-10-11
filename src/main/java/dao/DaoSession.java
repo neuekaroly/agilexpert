@@ -3,6 +3,7 @@ package dao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class DaoSession <T> implements DaoInterface<T>{
 
 
     public void persist(T entity) {
-        getCurrentSession().save(entity);
+        getCurrentSession().saveOrUpdate(entity);
         getCurrentTransaction().commit();
         currentTransaction = currentSession.beginTransaction();
     }
@@ -77,4 +78,9 @@ public class DaoSession <T> implements DaoInterface<T>{
         }
         getCurrentTransaction().commit();
     }
+
+   /* public T getByName() {
+        CriteriaBuilder criteriaBuilder = getCurrentSession().getCriteriaBuilder();
+        criteriaBuilder.createQuery(type).
+    }*/
 }
